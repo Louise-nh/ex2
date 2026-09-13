@@ -114,7 +114,7 @@ img {
 .feature-row {
   display: flex;
   align-items: stretch;
-  gap: 28px;
+  gap: 80px;
   width: 100%;
 }
 
@@ -130,7 +130,7 @@ img {
 .feature-photo {
   flex: 0 0 400px;
   margin: 0;
-  height: 450px;
+  height: 400px;
   overflow: hidden;
   background: #ddd2c2;
   border: 2px solid rgba(0, 0, 0, 1);
