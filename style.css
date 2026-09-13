@@ -367,6 +367,12 @@ img {
 .member {
   padding: 18px 0;
   border-top: 1px solid rgba(26, 26, 26, 0.35);
+
+}
+
+.member > ul > li {
+  line-height: 2.2;
+  letter-spacing: 0.1em;
 }
 
 .member:first-child {
@@ -381,6 +387,8 @@ img {
 .member p {
   margin: 6px 0;
 }
+
+
 
 .empty-state {
   min-height: 180px;
