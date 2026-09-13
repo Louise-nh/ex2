@@ -14,13 +14,14 @@ function updateCountdown() {
       surprisePanel.classList.add("show");
       surprisePanel.innerHTML = `
         <div class="surprise-box">
-          <p class="panel-label">Surprise</p>
-          <p>這裡留給未來的驚喜⋯⋯</p>
+          <img class="surprise-final-image" src="布條.JPG" alt="surprise" />
         </div>
       `;
     }
     return;
   }
+
+  surprisePanel?.classList.remove("show");
 
   const days = Math.floor(totalSeconds / 86400);
   const hours = Math.floor((totalSeconds % 86400) / 3600);

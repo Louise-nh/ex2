@@ -128,12 +128,12 @@ img {
 }
 
 .feature-photo {
-  flex: 0 0 340px;
+  flex: 0 0 400px;
   margin: 0;
-  height: 380px;
+  height: 450px;
   overflow: hidden;
   background: #ddd2c2;
-  border: 1px solid rgba(26, 26, 26, 0.18);
+  border: 2px solid rgba(0, 0, 0, 1);
   box-shadow: 0 12px 25px rgba(20, 20, 20, 0.08);
   order: 2;
 }
@@ -214,8 +214,8 @@ img {
 }
 
 .centered-countdown {
-  width: min(1100px, calc(100% - 32px));
-  margin: 26px auto 0;
+  width: 100%;
+  /* margin: 26px auto 0; */
 }
 
 .countdown {
@@ -234,22 +234,106 @@ img {
 }
 
 .surprise-panel {
-  padding: 18px 22px 22px;
+  display: none;
+  padding: 10px 12px 12px;
   margin-top: 28px;
 }
 
-.surprise-panel {
-  padding: 18px 22px 22px;
+.surprise-panel.show {
+  display: block;
 }
 
 .surprise-box {
-  min-height: 180px;
+  width: 100%;
   border: 1px dashed var(--line);
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.02);
+  overflow: hidden;
   transition: all 0.25s ease;
+}
+
+.surprise-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.surprise-content {
+  padding: 0;
+}
+
+.surprise-banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 230px;
+  background: #d71116;
+  border: 4px solid #a8000d;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+  padding: 16px 18px;
+}
+
+.surprise-sticker {
+  position: absolute;
+  left: 12px;
+  top: 28px;
+  transform: rotate(-18deg);
+  background: #f8ce3d;
+  color: #cc1717;
+  font-weight: 900;
+  font-size: clamp(1.3rem, 2vw, 2.2rem);
+  line-height: 1;
+  padding: 0.5rem 0.8rem;
+  border: 3px solid rgba(52, 28, 0, 0.7);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.surprise-photo {
+  width: 22%;
+  min-width: 120px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1;
+}
+
+.surprise-photo img {
+  display: block;
+  width: 100%;
+  max-width: 180px;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.surprise-text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #fff;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  font-size: clamp(1.1rem, 2.8vw, 3.1rem);
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+}
+
+.surprise-text span {
+  display: block;
 }
 
 .surprise-panel.show .surprise-box {
