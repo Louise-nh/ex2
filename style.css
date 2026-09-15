@@ -355,6 +355,173 @@ img {
   color: var(--ink);
 }
 
+.timeline-intro {
+  margin: 0 0 32px;
+  color: var(--muted);
+}
+
+.travel-timeline {
+  position: relative;
+  display: grid;
+  gap: 34px;
+  padding: 10px 0 16px 42px;
+}
+
+.travel-timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 11px;
+  width: 1px;
+  background: var(--line);
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -37px;
+  top: 18px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.timeline-date {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+}
+
+.travel-entry {
+  display: grid;
+  grid-template-columns: minmax(150px, 32%) 1fr;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--ink);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.travel-entry:hover,
+.travel-entry:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px var(--shadow);
+  outline: none;
+}
+
+.travel-photo,
+.dialog-photo {
+  display: flex;
+  min-height: 150px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #d8c7ad, #a9b2a1 52%, #71818a);
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.travel-photo img,
+.dialog-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-placeholder-icon {
+  border: 1px solid currentColor;
+  padding: 3px 5px;
+  font: 0.7rem Georgia, serif;
+  letter-spacing: 0.16em;
+}
+
+.photo-placeholder-text {
+  font-size: 0.9rem;
+}
+
+.travel-entry-copy {
+  display: flex;
+  min-height: 150px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px 24px;
+}
+
+.travel-entry-title {
+  font-size: clamp(1.25rem, 2.2vw, 1.8rem);
+  font-weight: 700;
+}
+
+.travel-entry-action {
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.travel-dialog {
+  width: min(720px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  padding: 0;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 18px 50px rgba(20, 20, 20, 0.22);
+}
+
+.travel-dialog::backdrop {
+  background: rgba(26, 26, 26, 0.48);
+}
+
+.dialog-content {
+  position: relative;
+  padding: 32px;
+}
+
+.dialog-close {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: 2rem Georgia, serif;
+  cursor: pointer;
+}
+
+.dialog-content h2 {
+  margin: 0 0 20px;
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+}
+
+.dialog-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.dialog-photo {
+  min-height: 220px;
+}
+
+.dialog-description {
+  margin: 22px 0 0;
+  color: var(--muted);
+}
+
 .article-body ul {
   padding-left: 1.4rem;
 }
@@ -427,5 +594,33 @@ img {
 
   .paper-card {
     padding: 20px 18px 24px;
+  }
+
+  .travel-timeline {
+    padding-left: 28px;
+  }
+
+  .travel-timeline::before {
+    left: 7px;
+  }
+
+  .timeline-item::before {
+    left: -27px;
+  }
+
+  .travel-entry {
+    grid-template-columns: 1fr;
+  }
+
+  .travel-photo {
+    min-height: 180px;
+  }
+
+  .travel-entry-copy {
+    min-height: 130px;
+  }
+
+  .dialog-content {
+    padding: 28px 20px 24px;
   }
 }
