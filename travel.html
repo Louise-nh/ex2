@@ -25,14 +25,25 @@
     <main class="page-shell article-shell">
       <article class="story-card paper-card">
         <header class="article-header">
-          <p class="eyebrow">遊記</p>
+          <p class="eyebrow">大事記</p>
         </header>
 
-        <div class="article-body empty-state">
-          <p>即將更新，敬請期待!</p>
+        <div class="article-body">
+          <p class="timeline-intro">把一起走過的日子，留在時間線上。</p>
+          <div id="travelTimeline" class="travel-timeline" aria-label="出遊時間線"></div>
         </div>
       </article>
     </main>
+
+    <dialog id="travelDialog" class="travel-dialog" aria-labelledby="dialogTitle">
+      <div class="dialog-content">
+        <button class="dialog-close" type="button" aria-label="關閉旅行詳細資訊">&times;</button>
+        <p class="eyebrow" id="dialogDate"></p>
+        <h2 id="dialogTitle"></h2>
+        <div id="dialogPhotos" class="dialog-photos"></div>
+        <p id="dialogDescription" class="dialog-description"></p>
+      </div>
+    </dialog>
 
     <script src="script.js"></script>
   </body>
