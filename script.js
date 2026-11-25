@@ -1,6 +1,5 @@
 const targetDate = new Date("2026/09/14 22:00:00");
-const countdownEl = document.getElementById("倒數");
-const surprisePanel = document.getElementById("surprise");
+let countdownTimer;
 
 // 新增旅程時只需在這裡加入一筆資料，照片路徑之後再填入即可。
 const travelRecords = [
@@ -84,9 +83,6 @@ const travelRecords = [
   },
 ];
 
-const travelTimeline = document.getElementById("travelTimeline");
-const travelDialog = document.getElementById("travelDialog");
-
 function photoMarkup(photo, title, index) {
   if (photo) {
     return `<img src="${photo}" alt="${title}照片 ${index + 1}" />`;
@@ -98,7 +94,7 @@ function photoMarkup(photo, title, index) {
   `;
 }
 
-function renderTravelTimeline() {
+function renderTravelTimeline(travelTimeline) {
   if (!travelTimeline) return;
 
   travelTimeline.innerHTML = travelRecords.map((record, index) => `
@@ -115,7 +111,7 @@ function renderTravelTimeline() {
   `).join("");
 }
 
-function openTravelDetails(index) {
+function openTravelDetails(index, travelDialog) {
   const record = travelRecords[index];
   if (!record || !travelDialog) return;
 
@@ -128,17 +124,7 @@ function openTravelDetails(index) {
   travelDialog.showModal();
 }
 
-renderTravelTimeline();
-travelTimeline?.addEventListener("click", (event) => {
-  const entry = event.target.closest("[data-travel-index]");
-  if (entry) openTravelDetails(Number(entry.dataset.travelIndex));
-});
-travelDialog?.querySelector(".dialog-close")?.addEventListener("click", () => travelDialog.close());
-travelDialog?.addEventListener("click", (event) => {
-  if (event.target === travelDialog) travelDialog.close();
-});
-
-function updateCountdown() {
+function updateCountdown(countdownEl, surprisePanel) {
   if (!countdownEl) return;
 
   const now = new Date();
@@ -167,5 +153,84 @@ function updateCountdown() {
   countdownEl.textContent = `${days} 天 ${hours} 小時 ${minutes} 分鐘 ${seconds} 秒`;
 }
 
-updateCountdown();
-setInterval(updateCountdown, 1000);
+function initializePage() {
+  clearInterval(countdownTimer);
+
+  const countdownEl = document.getElementById("倒數");
+  const surprisePanel = document.getElementById("surprise");
+  if (countdownEl) {
+    updateCountdown(countdownEl, surprisePanel);
+    countdownTimer = setInterval(() => updateCountdown(countdownEl, surprisePanel), 1000);
+  }
+
+  const travelTimeline = document.getElementById("travelTimeline");
+  const travelDialog = document.getElementById("travelDialog");
+  renderTravelTimeline(travelTimeline);
+  travelTimeline?.addEventListener("click", (event) => {
+    const entry = event.target.closest("[data-travel-index]");
+    if (entry) openTravelDetails(Number(entry.dataset.travelIndex), travelDialog);
+  });
+  travelDialog?.querySelector(".dialog-close")?.addEventListener("click", () => travelDialog.close());
+  travelDialog?.addEventListener("click", (event) => {
+    if (event.target === travelDialog) travelDialog.close();
+  });
+}
+
+async function loadPage(url, addHistoryEntry) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Could not load ${url.href}: ${response.status} ${response.statusText}`);
+  }
+
+  const nextDocument = new DOMParser().parseFromString(await response.text(), "text/html");
+  const currentMain = document.querySelector(".page-shell");
+  const nextMain = nextDocument.querySelector(".page-shell");
+  if (!currentMain || !nextMain) {
+    throw new Error(`Page ${url.href} does not contain a .page-shell element`);
+  }
+
+  if (addHistoryEntry) history.pushState({}, "", url);
+  currentMain.replaceWith(nextMain);
+
+  const currentDialog = document.getElementById("travelDialog");
+  const nextDialog = nextDocument.getElementById("travelDialog");
+  if (currentDialog && nextDialog) {
+    currentDialog.replaceWith(nextDialog);
+  } else if (currentDialog) {
+    currentDialog.remove();
+  } else if (nextDialog) {
+    document.body.insertBefore(nextDialog, document.querySelector('script[src="script.js"]'));
+  }
+
+  document.title = nextDocument.title;
+  document.querySelectorAll(".top-nav a").forEach((link) => {
+    link.classList.toggle("active", new URL(link.href, url).pathname === url.pathname);
+  });
+  initializePage();
+  window.scrollTo(0, 0);
+}
+
+initializePage();
+
+document.addEventListener("click", (event) => {
+  if (!(event.target instanceof Element)) return;
+
+  const link = event.target.closest(".top-nav a");
+  if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+  const url = new URL(link.href, window.location.href);
+  if (url.origin !== window.location.origin || !["http:", "https:"].includes(url.protocol)) return;
+
+  event.preventDefault();
+  loadPage(url, true).catch((error) => {
+    console.error("Page transition failed; loading the requested page normally.", error);
+    window.location.assign(url.href);
+  });
+});
+
+window.addEventListener("popstate", () => {
+  loadPage(new URL(window.location.href), false).catch((error) => {
+    console.error("History navigation failed; reloading the current page.", error);
+    window.location.reload();
+  });
+});
