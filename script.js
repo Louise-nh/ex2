@@ -8,7 +8,7 @@ const travelRecords = [
     date: "2025/06/18",
     title: "六福村一日遊",
     description: "在六福村留下充滿歡笑與尖叫的一天。",
-    photos: []
+    photos: ["pic/IMG_3493.JPG"]
   },
   {
     date: "2025/08/25-2025/08/27",
