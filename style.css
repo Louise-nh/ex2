@@ -544,10 +544,37 @@ img {
 .member {
   padding: 18px 0;
   border-top: 1px solid rgba(26, 26, 26, 0.35);
-
 }
 
-.member > ul > li {
+.member.has-photo {
+  display: grid;
+  grid-template-columns: minmax(140px, 220px) minmax(0, 1fr);
+  align-items: center;
+  gap: 28px;
+}
+
+.member-photo {
+  width: 100%;
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--paper-deep);
+  box-shadow: 0 8px 18px var(--shadow);
+}
+
+.member-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.member-copy {
+  min-width: 0;
+}
+
+.member ul > li {
   line-height: 2.2;
   letter-spacing: 0.1em;
 }
@@ -604,6 +631,16 @@ img {
 
   .paper-card {
     padding: 20px 18px 24px;
+  }
+
+  .member.has-photo {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .member-photo {
+    width: min(100%, 220px);
+    margin-inline: auto;
   }
 
   .travel-timeline {
